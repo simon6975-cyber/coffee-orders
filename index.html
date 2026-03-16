@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="커피주문" />
+<meta name="theme-color" content="#134E34" />
+<link rel="manifest" href="manifest.json" />
+<link rel="apple-touch-icon" sizes="180x180" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAIAAADdvvtQAAAD90lEQVR4nO3bQW4bRxCGUd+hr5Jz5P4XyS5AvAggCHZii/xnprq6HvAth6K66llDWuK39ecf0tt9K/8O1DqAFAWQogBSFECKAkhRACkKIEUBpCiAFAWQogBSFECKmgjon7//+qGrHvLGV+7eREDr9U1/5fqBetZYQOvFff/24pl61mRA65Wt//rKsXoWQO/dmz5fNlnPGg5oxS9uhutZAL394uaLP72ObzSgV+9N9PwcQO/cm+j5aC4gei5pKKDkdTFAn5sIKHxXBdDnxgG65D05Qx8NAvTbt04JoLGGpgC6/N4E0L+NAPTFHxivmvBzaI0FlFx2yaOO6XxAD9yYJhsCKL0+edQBTQTE0IWdD2jd+UfQlzyqdSMAradADHxfNgXQqjNUfvBbGwRoPWIIoMO75PXQ/z1qmp41ENDywcJLmwho+WDhdQ0FtHyw8KLmAloX/QHQwLfunxsNaPlcWBxA79+b6FkAKQwgRQGkqAaA/vNtzpzK5w9Q78rnD1DvyucPUO/K5w9Q78rnD1DvyucPUO/K5w9Q78rnD1DvyucPUO/K598e0M+Yyr8NB/yoE6Au/yhHnRGgvWp3RoD2qt0ZAdqrdmcEaK/anRGgvWp3RoD2qt0ZAdqrdmcEaK/anbENoEb/uz/qmADtVbtjArRXvzjmnr98BWivfjjm/r/GbwlI+zACaEQAAbQpI4BmNRRQ+dxPCiBtZAigoQE0t6vmA9Cs7pgVQCO6dWIAndwDQwPo5J4Z3eGAyrd4vCGATu6ZGQJ0bAABVA/oPkMA7d5jkwTozAACaBdAdxgCaPcAAgggek4xBNDEHhspQGcGEEAAAQQQQE0DCKBdAF3+RAA1CCB6djEE0NAAAqge0B1PAVCPAAKoGNBNTwFQj/bUA1CbAAKoDNCtXxygHt06wzMBle9st24aYLgmgNp00/QAmtIdc8vXBFC/rprVJWsCaGhXrQmgiV24JoDGde2aAJrV5WvaFFD5oI/sjk0BNKL7NgXQ4d29KYCO7ZlNAXRaD28KoE6V7wWg3pXvBaDele+lB6DyPe1c+XYA6l35dgDqXfl2AOpd+XYA6l35dgDqXfl2AOpd+XYA6l35dgDqXfl2tgBUvoZTmwKIoTP0VAJi6AA9xYAY6q6nHhBDrfUAdELTATHUV88ugBhqqmcjQAx11LMXIIba6dkOkNoFkKIAUhRAigJIUQApCiBFAaQogBQFkKIAUhRAigJIUQApCiBFAaQogBQFkKIAUhRAigJIUQApCiBFAaQogBQFkKIAUhRAigJIUQApCiBFAaQogBQFkKIAUhRAigJIUQApCiBFAaQogBQFkKIAUhRAigJIUQApCiBFfQeCgXLGhBr9dQAAAABJRU5ErkJggg==" />
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAIAAADdvvtQAAAD90lEQVR4nO3bQW4bRxCGUd+hr5Jz5P4XyS5AvAggCHZii/xnprq6HvAth6K66llDWuK39ecf0tt9K/8O1DqAFAWQogBSFECKAkhRACkKIEUBpCiAFAWQogBSFECKmgjon7//+qGrHvLGV+7eREDr9U1/5fqBetZYQOvFff/24pl61mRA65Wt//rKsXoWQO/dmz5fNlnPGg5oxS9uhutZAL394uaLP72ObzSgV+9N9PwcQO/cm+j5aC4gei5pKKDkdTFAn5sIKHxXBdDnxgG65D05Qx8NAvTbt04JoLGGpgC6/N4E0L+NAPTFHxivmvBzaI0FlFx2yaOO6XxAD9yYJhsCKL0+edQBTQTE0IWdD2jd+UfQlzyqdSMAradADHxfNgXQqjNUfvBbGwRoPWIIoMO75PXQ/z1qmp41ENDywcJLmwho+WDhdQ0FtHyw8KLmAloX/QHQwLfunxsNaPlcWBxA79+b6FkAKQwgRQGkqAaA/vNtzpzK5w9Q78rnD1DvyucPUO/K5w9Q78rnD1DvyucPUO/K5w9Q78rnD1DvyucPUO/K598e0M+Yyr8NB/yoE6Au/yhHnRGgvWp3RoD2qt0ZAdqrdmcEaK/anRGgvWp3RoD2qt0ZAdqrdmcEaK/anbENoEb/uz/qmADtVbtjArRXvzjmnr98BWivfjjm/r/GbwlI+zACaEQAAbQpI4BmNRRQ+dxPCiBtZAigoQE0t6vmA9Cs7pgVQCO6dWIAndwDQwPo5J4Z3eGAyrd4vCGATu6ZGQJ0bAABVA/oPkMA7d5jkwTozAACaBdAdxgCaPcAAgggek4xBNDEHhspQGcGEEAAAQQQQE0DCKBdAF3+RAA1CCB6djEE0NAAAqge0B1PAVCPAAKoGNBNTwFQj/bUA1CbAAKoDNCtXxygHt06wzMBle9st24aYLgmgNp00/QAmtIdc8vXBFC/rprVJWsCaGhXrQmgiV24JoDGde2aAJrV5WvaFFD5oI/sjk0BNKL7NgXQ4d29KYCO7ZlNAXRaD28KoE6V7wWg3pXvBaDele+lB6DyPe1c+XYA6l35dgDqXfl2AOpd+XYA6l35dgDqXfl2AOpd+XYA6l35dgDqXfl2tgBUvoZTmwKIoTP0VAJi6AA9xYAY6q6nHhBDrfUAdELTATHUV88ugBhqqmcjQAx11LMXIIba6dkOkNoFkKIAUhRAigJIUQApCiBFAaQogBQFkKIAUhRAigJIUQApCiBFAaQogBQFkKIAUhRAigJIUQApCiBFAaQogBQFkKIAUhRAigJIUQApCiBFAaQogBQFkKIAUhRAigJIUQApCiBFAaQogBQFkKIAUhRAigJIUQApCiBFfQeCgXLGhBr9dQAAAABJRU5ErkJggg==" />
+<title>팀 커피 주문</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+:root {
+  --bg: #ffffff; --bg2: #f5f5f3; --bg3: #ebebea;
+  --text: #1a1a1a; --text2: #6b6b6b; --text3: #a8a8a8;
+  --border: rgba(0,0,0,0.1); --border2: rgba(0,0,0,0.18);
+  --radius: 10px; --radius-lg: 14px;
+  --green-bg: #E1F5EE; --green: #0F6E56; --green-border: #1D9E75;
+  --red-bg: #FCEBEB; --red: #A32D2D; --red-border: #F09595;
+  --blue-bg: #E6F1FB; --blue: #185FA5;
+  --amber-bg: #FAEEDA; --amber: #854F0B;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1c1c1e; --bg2: #2c2c2e; --bg3: #3a3a3c;
+    --text: #f2f2f7; --text2: #8e8e93; --text3: #636366;
+    --border: rgba(255,255,255,0.1); --border2: rgba(255,255,255,0.2);
+    --green-bg: #0a2e20; --green: #4CD9A0; --green-border: #1D9E75;
+    --red-bg: #2c1010; --red: #FF6B6B; --red-border: #A32D2D;
+    --blue-bg: #0d1f33; --blue: #6DB3F2;
+    --amber-bg: #2e1f05; --amber: #FAC775;
+  }
+}
+html, body { height: 100%; overflow: hidden; }
+body { font-family: -apple-system, 'SF Pro Text', BlinkMacSystemFont, sans-serif; background: var(--bg3); color: var(--text); display: flex; flex-direction: column; }
+
+/* 오버레이 공통 */
+.overlay { position: fixed; inset: 0; z-index: 200; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; }
+.overlay.green { background: #134E34; }
+.overlay.dark { background: rgba(0,0,0,0.7); backdrop-filter: blur(6px); }
+.overlay-icon { font-size: 52px; margin-bottom: 18px; }
+.overlay h2 { font-size: 24px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+.overlay p { font-size: 15px; color: rgba(255,255,255,0.65); margin-bottom: 2rem; text-align: center; line-height: 1.6; }
+.overlay-input { width: 100%; max-width: 320px; height: 52px; padding: 0 18px; border: none; border-radius: var(--radius-lg); font-size: 17px; background: rgba(255,255,255,0.15); color: #fff; outline: none; text-align: center; margin-bottom: 12px; font-family: inherit; }
+.overlay-input::placeholder { color: rgba(255,255,255,0.45); }
+.overlay-input:focus { background: rgba(255,255,255,0.22); }
+.overlay-btn { width: 100%; max-width: 320px; height: 52px; background: #fff; color: #134E34; border: none; border-radius: var(--radius-lg); font-size: 17px; font-weight: 600; cursor: pointer; font-family: inherit; margin-bottom: 10px; }
+.overlay-btn:active { opacity: 0.85; }
+.overlay-btn.secondary { background: rgba(255,255,255,0.15); color: #fff; }
+.error-msg { font-size: 14px; color: #FCA5A5; margin-top: 6px; min-height: 20px; text-align: center; max-width: 320px; }
+
+/* 앱 레이아웃 */
+.status-bar { height: var(--safe-top); background: #134E34; flex-shrink: 0; }
+.topbar { background: #134E34; padding: 12px 16px 12px; flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; }
+.topbar-left h1 { font-size: 17px; font-weight: 700; color: #fff; }
+.topbar-left .sub { font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 2px; display: flex; align-items: center; gap: 5px; }
+.conn-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.3); display: inline-block; flex-shrink: 0; }
+.conn-dot.online { background: #6EE7B7; }
+.topbar-right { display: flex; align-items: center; gap: 6px; }
+.name-chip { font-size: 13px; background: rgba(255,255,255,0.15); color: #fff; padding: 4px 12px; border-radius: 20px; }
+.admin-chip { font-size: 11px; background: #F59E0B; color: #fff; padding: 3px 8px; border-radius: 20px; font-weight: 600; }
+.change-btn { font-size: 12px; background: none; border: none; color: rgba(255,255,255,0.55); cursor: pointer; padding: 4px; font-family: inherit; }
+
+.content { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 0 0 80px; }
+.bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg); border-top: 0.5px solid var(--border); display: flex; padding-bottom: var(--safe-bottom); z-index: 100; }
+.nav-btn { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 8px 4px 6px; border: none; background: none; cursor: pointer; color: var(--text3); font-size: 10px; gap: 3px; font-family: inherit; }
+.nav-btn.active { color: #134E34; }
+.nav-icon { font-size: 22px; line-height: 1; }
+.panel { display: none; } .panel.active { display: block; }
+
+/* 공통 컴포넌트 */
+.section { padding: 16px; }
+.section-label { font-size: 12px; color: var(--text2); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+.card { background: var(--bg); border-radius: var(--radius-lg); border: 0.5px solid var(--border); overflow: hidden; margin-bottom: 12px; }
+input[type=text], input[type=number], input[type=password] { height: 44px; padding: 0 14px; border: 0.5px solid var(--border2); border-radius: var(--radius); font-size: 16px; background: var(--bg); color: var(--text); outline: none; -webkit-appearance: none; width: 100%; font-family: inherit; }
+input:focus { border-color: var(--text2); }
+select { width: 100%; height: 44px; padding: 0 12px; border: 0.5px solid var(--border); border-radius: var(--radius); font-size: 15px; background: var(--bg); color: var(--text); -webkit-appearance: none; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; }
+.btn { height: 44px; padding: 0 18px; border: 0.5px solid var(--border2); border-radius: var(--radius); font-size: 15px; cursor: pointer; background: transparent; color: var(--text); white-space: nowrap; font-family: inherit; }
+.btn:active { opacity: 0.6; }
+.btn-primary { background: #134E34; color: #fff; border-color: #134E34; }
+.btn-full { width: 100%; height: 50px; font-size: 16px; font-weight: 600; border-radius: var(--radius-lg); }
+.btn-sm { height: 30px; padding: 0 12px; font-size: 13px; }
+.btn-danger { color: var(--red); border-color: var(--red-border); }
+.btn-icon { width: 32px; height: 32px; padding: 0; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 15px; }
+
+/* 주문 탭 */
+.my-order-card { background: var(--bg); border-radius: var(--radius-lg); border: 0.5px solid var(--border); padding: 14px; margin-bottom: 12px; }
+.my-order-card h3 { font-size: 14px; font-weight: 500; color: var(--text2); margin-bottom: 10px; }
+.my-order-card select { margin-bottom: 10px; }
+.opts { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+.opt-btn { font-size: 13px; padding: 6px 13px; border: 0.5px solid var(--border2); border-radius: 20px; cursor: pointer; background: transparent; color: var(--text2); font-family: inherit; }
+.opt-btn.on { background: var(--green-bg); border-color: var(--green-border); color: var(--green); }
+.opt-btn:active { opacity: 0.6; }
+.confirm-btn { width: 100%; height: 48px; background: #134E34; color: #fff; border: none; border-radius: var(--radius-lg); font-size: 16px; font-weight: 600; cursor: pointer; font-family: inherit; }
+.confirm-btn:active { opacity: 0.8; }
+.confirm-btn.confirmed { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+
+.member-item { padding: 12px 14px; border-bottom: 0.5px solid var(--border); display: flex; align-items: center; gap: 12px; background: var(--bg); }
+.member-item:last-child { border-bottom: none; }
+.avatar { width: 38px; height: 38px; border-radius: 50%; background: var(--blue-bg); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 600; color: var(--blue); flex-shrink: 0; }
+.avatar.me { background: #E1F5EE; color: #0F6E56; }
+.member-info { flex: 1; min-width: 0; }
+.mname { font-size: 15px; font-weight: 500; }
+.morder { font-size: 12px; margin-top: 3px; }
+.order-tag { display: inline-block; color: var(--green); background: var(--green-bg); padding: 2px 9px; border-radius: 20px; }
+.waiting-tag { display: inline-block; color: var(--text3); background: var(--bg2); padding: 2px 9px; border-radius: 20px; }
+
+.summary-wrap { padding: 0 16px 4px; }
+.count-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 14px; -webkit-overflow-scrolling: touch; }
+.count-scroll::-webkit-scrollbar { display: none; }
+.count-chip { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 10px 14px; text-align: center; flex-shrink: 0; min-width: 82px; }
+.count-chip .n { font-size: 22px; font-weight: 700; }
+.count-chip .l { font-size: 11px; color: var(--text2); margin-top: 2px; }
+.order-list { list-style: none; }
+.order-list li { display: flex; align-items: flex-start; padding: 9px 0; border-bottom: 0.5px solid var(--border); font-size: 14px; gap: 8px; }
+.order-list li:last-child { border-bottom: none; }
+.order-list .who { color: var(--text2); min-width: 55px; font-size: 13px; padding-top: 1px; }
+.order-list .what { flex: 1; font-weight: 500; }
+.order-list .amt { color: var(--text2); font-size: 13px; white-space: nowrap; padding-top: 1px; }
+.total-row { display: flex; justify-content: space-between; padding-top: 12px; border-top: 0.5px solid var(--border2); font-size: 16px; font-weight: 700; margin-top: 4px; }
+.save-btn-wrap { padding: 8px 16px 4px; }
+.team-toggle { display: flex; align-items: center; justify-content: space-between; width: 100%; background: none; border: none; cursor: pointer; padding: 0 0 8px 0; font-family: inherit; }
+.team-toggle > span:first-child { font-size: 12px; color: var(--text2); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+.toggle-row { display: flex; align-items: center; gap: 6px; }
+.team-arrow { font-size: 16px; color: var(--text3); transition: transform 0.2s; display: inline-block; }
+.team-arrow.open { transform: rotate(0deg); }
+.team-arrow.closed { transform: rotate(-90deg); }
+.team-card-body { overflow: hidden; transition: max-height 0.3s ease, opacity 0.2s; max-height: 2000px; opacity: 1; }
+.team-card-body.collapsed { max-height: 0; opacity: 0; margin-bottom: 0; }
+.confirmed-badge { font-size: 11px; background: var(--green-bg); color: var(--green); padding: 2px 8px; border-radius: 20px; font-weight: 600; }
+
+/* 메뉴 탭 */
+.menu-item { display: flex; flex-direction: column; padding: 12px 14px; gap: 8px; border-bottom: 0.5px solid var(--border); background: var(--bg); }
+.menu-item:last-child { border-bottom: none; }
+.menu-item-top { display: flex; align-items: center; gap: 8px; }
+.menu-item-top input[type=text] { flex: 1; height: 36px; font-size: 14px; }
+.menu-item-prices { display: flex; gap: 8px; align-items: center; }
+.menu-item input[type=number] { height: 34px; font-size: 14px; text-align: right; }
+.price-field { display: flex; align-items: center; gap: 5px; flex: 1; }
+.price-field input { flex: 1; }
+.price-label { font-size: 12px; color: var(--text2); font-weight: 600; white-space: nowrap; }
+.add-form { background: var(--bg); border-radius: var(--radius-lg); border: 0.5px solid var(--border); padding: 14px; margin-top: 12px; }
+.add-form-fields { display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px; }
+.add-price-row { display: flex; gap: 8px; }
+.add-price-row .price-field { flex: 1; }
+
+/* 관리자 탭 */
+.registered-item { display: flex; align-items: center; padding: 12px 14px; border-bottom: 0.5px solid var(--border); gap: 10px; }
+.registered-item:last-child { border-bottom: none; }
+.reg-avatar { width: 34px; height: 34px; border-radius: 50%; background: var(--bg2); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; color: var(--text2); flex-shrink: 0; }
+.reg-name { flex: 1; font-size: 15px; }
+.online-badge { font-size: 11px; background: var(--green-bg); color: var(--green); padding: 2px 8px; border-radius: 20px; }
+
+/* 기록 탭 */
+.hist-item { background: var(--bg); border-radius: var(--radius-lg); border: 0.5px solid var(--border); overflow: hidden; margin-bottom: 12px; }
+.hist-item-header { display: flex; justify-content: space-between; align-items: center; padding: 12px 14px 10px; }
+.hist-date { font-size: 14px; font-weight: 600; color: var(--text); }
+.hist-body { padding: 0 14px; border-top: 0.5px solid var(--border); }
+.hist-row { display: flex; align-items: baseline; gap: 8px; padding: 7px 0; border-bottom: 0.5px solid var(--border); }
+.hist-row:last-child { border-bottom: none; }
+.hist-num { font-size: 11px; color: var(--text3); min-width: 18px; flex-shrink: 0; text-align: right; }
+.hist-who { font-size: 13px; color: var(--text2); min-width: 52px; flex-shrink: 0; }
+.hist-what { font-size: 14px; flex: 1; }
+.hist-amt { font-size: 13px; color: var(--text2); white-space: nowrap; }
+.hist-day-total { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; border-top: 0.5px solid var(--border2); background: var(--bg2); font-size: 14px; font-weight: 700; }
+
+/* 토스트 */
+.toast { position: fixed; bottom: calc(72px + var(--safe-bottom)); left: 50%; transform: translateX(-50%) translateY(16px); background: var(--text); color: var(--bg); font-size: 14px; padding: 10px 20px; border-radius: 20px; opacity: 0; transition: all 0.25s; pointer-events: none; white-space: nowrap; z-index: 300; }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.empty-msg { text-align: center; padding: 3rem 1rem; color: var(--text3); font-size: 14px; }
+.input-row { display: flex; gap: 8px; margin-bottom: 0; }
+.input-row input { flex: 1; }
+</style>
+</head>
+<body>
+
+<!-- 이름 입력 오버레이 -->
+<div class="overlay green" id="overlayName">
+  <div class="overlay-icon">☕</div>
+  <h2>팀 커피 주문</h2>
+  <p>등록된 이름을 입력하면<br>바로 팀 주문에 참여돼요</p>
+  <input class="overlay-input" type="text" id="nameInput" placeholder="내 이름 입력..." maxlength="10" />
+  <button class="overlay-btn" onclick="enterApp()">시작하기</button>
+  <button class="overlay-btn secondary" onclick="showAdminLogin()">🔑 관리자 로그인</button>
+  <div class="error-msg" id="nameError"></div>
+</div>
+
+<!-- 관리자 비밀번호 오버레이 -->
+<div class="overlay dark" id="overlayAdmin" style="display:none">
+  <div class="overlay-icon">🔑</div>
+  <h2>관리자 로그인</h2>
+  <p>관리자 비밀번호를 입력해주세요</p>
+  <input class="overlay-input" type="password" id="adminPwInput" placeholder="비밀번호 입력..." />
+  <button class="overlay-btn" onclick="loginAdmin()">로그인</button>
+  <button class="overlay-btn secondary" onclick="hideAdminLogin()">취소</button>
+  <div class="error-msg" id="adminError"></div>
+</div>
+
+<!-- 앱 -->
+<div class="status-bar"></div>
+<div class="topbar">
+  <div class="topbar-left">
+    <h1>☕ 팀 커피 주문</h1>
+    <div class="sub"><span class="conn-dot" id="connDot"></span><span id="connText">연결 중...</span></div>
+  </div>
+  <div class="topbar-right">
+    <span class="admin-chip" id="adminChip" style="display:none">관리자</span>
+    <span class="name-chip" id="nameChip"></span>
+    <button class="change-btn" onclick="logout()">나가기</button>
+  </div>
+</div>
+
+<div class="content">
+  <!-- 주문 탭 -->
+  <div id="panel-order" class="panel active">
+    <div class="section">
+      <div class="section-label">내 주문</div>
+      <div class="my-order-card">
+        <h3 id="myOrderLabel">메뉴를 선택해주세요</h3>
+        <select id="myDrinkSelect" onchange="onDrinkChange()">
+          <option value="none">선택 안함</option>
+        </select>
+        <div class="opts" id="myOpts"></div>
+        <button class="confirm-btn" id="confirmBtn" onclick="confirmMyOrder()">✓ 주문 확정</button>
+      </div>
+      <button class="team-toggle" id="teamToggle" onclick="toggleTeamCard()">
+        <span>팀원 현황 <span id="memberCount" style="color:var(--text3);font-weight:400"></span></span>
+        <span class="toggle-row">
+          <span id="teamConfirmedBadge" class="confirmed-badge" style="display:none"></span>
+          <span id="teamArrow" class="team-arrow closed">▾</span>
+        </span>
+      </button>
+      <div class="card team-card-body collapsed" id="teamCard"><div class="empty-msg">불러오는 중...</div></div>
+    </div>
+    <div id="summarySection"></div>
+
+  </div>
+
+  <!-- 메뉴 탭 -->
+  <div id="panel-menu" class="panel">
+    <div class="section">
+      <div class="section-label">메뉴 목록</div>
+      <div class="card"><div id="menuList"></div></div>
+      <div class="add-form" id="menuAddForm">
+        <div class="section-label" style="margin-bottom:10px">새 메뉴 추가</div>
+        <div class="add-form-fields">
+          <input type="text" id="newMenuName" placeholder="메뉴 이름 (예: 에스프레소)" />
+          <div class="add-price-row">
+            <div class="price-field">
+              <span class="price-label">M</span>
+              <input type="number" id="newMenuPriceM" placeholder="M 가격 (원)" min="0" step="100" />
+            </div>
+            <div class="price-field">
+              <span class="price-label">L</span>
+              <input type="number" id="newMenuPriceL" placeholder="L 가격 (원)" min="0" step="100" />
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-primary" style="width:100%;height:46px;border-radius:var(--radius-lg)" onclick="addMenuItem()">+ 메뉴 추가</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 관리자 탭 (관리자만 보임) -->
+  <div id="panel-admin" class="panel">
+    <div class="section">
+      <div class="section-label">팀원 관리</div>
+      <div class="card"><div id="registeredList"></div></div>
+      <div class="add-form">
+        <div class="section-label" style="margin-bottom:10px">팀원 추가</div>
+        <div style="display:flex;gap:8px">
+          <input type="text" id="newMemberName" placeholder="이름 입력..." maxlength="10" style="flex:1" />
+          <button class="btn btn-primary" style="flex-shrink:0" onclick="addRegisteredMember()">추가</button>
+        </div>
+      </div>
+
+      <div class="section-label" style="margin-top:16px">관리자 비밀번호 변경</div>
+      <div class="card" style="padding:14px">
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <input type="password" id="newPw1" placeholder="새 비밀번호" />
+          <input type="password" id="newPw2" placeholder="새 비밀번호 확인" />
+          <button class="btn btn-primary" style="width:100%;margin-top:4px" onclick="changePassword()">비밀번호 변경</button>
+        </div>
+      </div>
+
+      <div style="margin-top:16px">
+        <button class="btn btn-danger" style="width:100%;height:44px;border-radius:var(--radius-lg)" onclick="resetAllOrders()">🔄 전체 주문 초기화</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 기록 탭 -->
+  <div id="panel-history" class="panel">
+    <div class="section">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <div class="section-label" style="margin:0">주문 기록</div>
+        <button class="btn btn-sm btn-danger" onclick="clearHistory()">전체 삭제</button>
+      </div>
+      <div id="historyList"></div>
+    </div>
+  </div>
+</div>
+
+<nav class="bottom-nav" id="bottomNav">
+  <button class="nav-btn active" id="nav-order" onclick="switchTab('order')"><span class="nav-icon">☕</span><span>주문</span></button>
+  <button class="nav-btn" id="nav-menu" onclick="switchTab('menu')"><span class="nav-icon">📋</span><span>메뉴</span></button>
+  <button class="nav-btn" id="nav-admin" onclick="switchTab('admin')" style="display:none"><span class="nav-icon">⚙️</span><span>관리</span></button>
+  <button class="nav-btn" id="nav-history" onclick="switchTab('history')"><span class="nav-icon">🕐</span><span>기록</span></button>
+</nav>
+<div class="toast" id="toast"></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, set, get, update, onValue, remove, push } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAnhodesyW_2SOly1oMAB25M1MOyfb8piA",
+  authDomain: "coffee-order-f1e1b.firebaseapp.com",
+  databaseURL: "https://coffee-order-f1e1b-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "coffee-order-f1e1b",
+  storageBucket: "coffee-order-f1e1b.firebasestorage.app",
+  messagingSenderId: "157369526558",
+  appId: "1:157369526558:web:3b9014c72055e89b45010f"
+};
+
+const fbApp = initializeApp(firebaseConfig);
+const db = getDatabase(fbApp);
+const ROOM = 'team_main';
+const DEFAULT_ADMIN_PW = 'admin1234'; // 초기 비밀번호
+
+const DEFAULT_MENU = [
+  { id: 'americano',  name: '아메리카노',     priceM: 4500, priceL: 5000 },
+  { id: 'latte',      name: '카페 라떼',       priceM: 5000, priceL: 5500 },
+  { id: 'cappuccino', name: '카푸치노',         priceM: 5000, priceL: 5500 },
+  { id: 'mocha',      name: '카페 모카',        priceM: 5500, priceL: 6000 },
+  { id: 'vanilla',    name: '바닐라 라떼',      priceM: 5500, priceL: 6000 },
+  { id: 'caramel',    name: '카라멜 마키아토',  priceM: 6000, priceL: 6500 },
+  { id: 'cold_brew',  name: '콜드브루',         priceM: 5500, priceL: 6000 },
+  { id: 'green_tea',  name: '녹차 라떼',        priceM: 5500, priceL: 6000 },
+  { id: 'hot_choco',  name: '핫초코',           priceM: 5000, priceL: 5500 },
+];
+const OPTIONS = [
+  { id: 'size_m', name: 'M',        group: 'size' },
+  { id: 'size_l', name: 'L',        group: 'size' },
+  { id: 'ice',    name: '아이스',   group: 'temp' },
+  { id: 'hot',    name: '핫',       group: 'temp' },
+  { id: 'decaf',  name: '디카페인', group: 'decaf' },
+  { id: 'shot',   name: '샷 추가',  group: 'shot' },
+  { id: 'syrup',  name: '시럽',     group: 'syrup' },
+];
+// 로컬 opts 상태 (Firebase 업데이트와 분리)
+let localOpts = [];
+
+const ls = {
+  get: (k, d) => { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch(e) { return d; } },
+  set: (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch(e) {} }
+};
+
+let myId = ls.get('coffee_myid', null);
+if (!myId) { myId = 'u_' + Math.random().toString(36).slice(2, 9); ls.set('coffee_myid', myId); }
+
+let myName = null;
+let isAdmin = false;
+let menu = [], members = {}, registeredMembers = {};
+let history = [];
+let menuCtr = ls.get('coffee_mctr', 100);
+let roomListener = null;
+
+// ── 유틸 ──
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove('show'), 2200);
+}
+function setConn(ok) {
+  document.getElementById('connDot').className = 'conn-dot' + (ok ? ' online' : '');
+  document.getElementById('connText').textContent = ok ? '실시간 연결됨' : '연결 끊김';
+}
+
+// ── Firebase 초기화 ──
+async function initFirebase() {
+  // 메뉴 초기화
+  const menuSnap = await get(ref(db, `${ROOM}/menu`));
+  if (!menuSnap.exists()) {
+    await set(ref(db, `${ROOM}/menu`), DEFAULT_MENU.reduce((o,m) => { o[m.id]=m; return o; }, {}));
+  } else {
+    // 기존 price 필드만 있는 메뉴를 priceM/priceL로 마이그레이션
+    const menuData = menuSnap.val();
+    const updates = {};
+    Object.entries(menuData).forEach(([id, m]) => {
+      if (m.price !== undefined && m.priceM === undefined) {
+        updates[`${ROOM}/menu/${id}/priceM`] = m.price;
+        updates[`${ROOM}/menu/${id}/priceL`] = Math.round(m.price * 1.1 / 100) * 100;
+      }
+    });
+    if (Object.keys(updates).length > 0) await update(ref(db), updates);
+  }
+  // 관리자 비번 초기화
+  const pwSnap = await get(ref(db, `${ROOM}/adminPw`));
+  if (!pwSnap.exists()) {
+    await set(ref(db, `${ROOM}/adminPw`), DEFAULT_ADMIN_PW);
+  }
+}
+
+// ── 이름 입력 & 검증 ──
+window.enterApp = async function() {
+  const name = document.getElementById('nameInput').value.trim();
+  const errEl = document.getElementById('nameError');
+  if (!name) { errEl.textContent = '이름을 입력해주세요'; return; }
+
+  // 등록된 팀원 확인
+  const snap = await get(ref(db, `${ROOM}/registeredMembers`));
+  if (snap.exists()) {
+    const regs = snap.val();
+    const found = Object.values(regs).find(m => m.name === name);
+    if (!found) { errEl.textContent = '등록되지 않은 이름이에요. 관리자에게 문의하세요'; return; }
+  }
+  // 등록된 팀원이 아무도 없으면 (첫 세팅) 통과
+  errEl.textContent = '';
+  myName = name; ls.set('coffee_name', name);
+  isAdmin = false;
+  startApp();
+};
+
+window.showAdminLogin = function() {
+  document.getElementById('overlayAdmin').style.display = 'flex';
+  document.getElementById('adminPwInput').value = '';
+  document.getElementById('adminError').textContent = '';
+};
+window.hideAdminLogin = function() {
+  document.getElementById('overlayAdmin').style.display = 'none';
+};
+
+window.loginAdmin = async function() {
+  const pw = document.getElementById('adminPwInput').value;
+  const errEl = document.getElementById('adminError');
+  const snap = await get(ref(db, `${ROOM}/adminPw`));
+  const correctPw = snap.exists() ? snap.val() : DEFAULT_ADMIN_PW;
+  if (pw !== correctPw) { errEl.textContent = '비밀번호가 틀렸어요'; return; }
+  errEl.textContent = '';
+  myName = '관리자'; isAdmin = true;
+  ls.set('coffee_name', '관리자'); ls.set('coffee_admin', true);
+  startApp();
+};
+
+window.logout = function() {
+  if (roomListener) { roomListener(); roomListener = null; }
+  if (!isAdmin && myName) remove(ref(db, `${ROOM}/members/${myId}`));
+  myName = null; isAdmin = false;
+  ls.set('coffee_name', null); ls.set('coffee_admin', false);
+  document.getElementById('overlayName').style.display = 'flex';
+  document.getElementById('nameInput').value = '';
+  document.getElementById('nameError').textContent = '';
+  setConn(false);
+};
+
+// ── 앱 시작 ──
+async function startApp() {
+  document.getElementById('overlayName').style.display = 'none';
+  document.getElementById('overlayAdmin').style.display = 'none';
+  document.getElementById('nameChip').textContent = myName;
+  document.getElementById('myOrderLabel').textContent = isAdmin ? '관리자 모드' : myName + '의 메뉴';
+  document.getElementById('adminChip').style.display = isAdmin ? 'inline-block' : 'none';
+
+  // 관리자 탭 보이기/숨기기
+  document.getElementById('nav-admin').style.display = isAdmin ? 'flex' : 'none';
+  document.getElementById('menuAddForm').style.display = isAdmin ? 'block' : 'none';
+
+  await initFirebase();
+
+  if (!isAdmin) {
+    const mySnap = await get(ref(db, `${ROOM}/members/${myId}`));
+    if (!mySnap.exists()) {
+      localOpts = [];
+      await set(ref(db, `${ROOM}/members/${myId}`), { name: myName, drink: 'none', opts: [], confirmed: false, joinedAt: Date.now() });
+    } else {
+      localOpts = mySnap.val().opts || [];
+      await update(ref(db, `${ROOM}/members/${myId}`), { name: myName });
+    }
+    _menuInitialized = false;
+  }
+
+  listenRoom();
+}
+
+let historyListener = null;
+
+function listenRoom() {
+  if (roomListener) roomListener();
+  roomListener = onValue(ref(db, ROOM), snap => {
+    if (!snap.exists()) return;
+    const data = snap.val();
+    members = data.members || {};
+    menu = Object.values(data.menu || {}).sort((a,b)=>a.name.localeCompare(b.name,'ko'));
+    registeredMembers = data.registeredMembers || {};
+    setConn(true);
+    if (!isAdmin) renderMyOrderUI();
+    renderTeam();
+    renderSummary();
+    renderMenuTab();
+    if (isAdmin) renderRegisteredList();
+  }, () => setConn(false));
+
+  // 기록 실시간 구독
+  if (historyListener) historyListener();
+  historyListener = onValue(ref(db, `${ROOM}/history`), snap => {
+    history = snap.exists()
+      ? Object.entries(snap.val()).map(([fbKey, h]) => ({ ...h, fbKey }))
+      : [];
+    if (document.getElementById('panel-history').classList.contains('active')) renderHistory();
+  });
+}
+
+// ── 내 주문 ──
+let _menuInitialized = false; // 메뉴 select 최초 1회만 세팅
+
+function renderMyOrderUI() {
+  const sel = document.getElementById('myDrinkSelect');
+  const myData = members[myId];
+  const curDrink = myData?.drink || 'none';
+
+  // 메뉴 옵션은 최초 1회 or 메뉴 목록 변경 시만 재구성 (select 값 유지)
+  const newMenuHtml = '<option value="none">선택 안함</option>' +
+    menu.map(m => `<option value="${m.id}">${m.name}</option>`).join('');
+  if (sel.dataset.menuHash !== newMenuHtml) {
+    const curVal = sel.value; // 현재 선택값 기억
+    sel.innerHTML = newMenuHtml;
+    sel.dataset.menuHash = newMenuHtml;
+    // 현재 선택값 복원 (없으면 Firebase 저장값 사용)
+    sel.value = curVal || curDrink;
+    if (!sel.value) sel.value = curDrink;
+    _menuInitialized = true;
+  }
+
+  // 서브메뉴 최초 로드 시 Firebase값으로 localOpts 초기화
+  if (!_menuInitialized || localOpts === undefined) {
+    localOpts = [...(myData?.opts || [])];
+  }
+
+  renderOptButtons();
+
+  // 확정 버튼
+  const btn = document.getElementById('confirmBtn');
+  if (myData?.confirmed && curDrink !== 'none') {
+    const item = menu.find(m => m.id === curDrink);
+    btn.textContent = '✓ ' + (item?.name||'') + ' 확정됨';
+    btn.className = 'confirm-btn confirmed';
+  } else {
+    btn.textContent = '✓ 주문 확정';
+    btn.className = 'confirm-btn';
+  }
+}
+
+function renderOptButtons() {
+  document.getElementById('myOpts').innerHTML = OPTIONS.map(op =>
+    `<button class="opt-btn ${localOpts.includes(op.id)?'on':''}" onclick="toggleMyOpt('${op.id}')">${op.name}</button>`
+  ).join('');
+}
+
+window.onDrinkChange = () => {
+  const btn = document.getElementById('confirmBtn');
+  btn.textContent = '✓ 주문 확정'; btn.className = 'confirm-btn';
+};
+
+window.toggleMyOpt = async (id) => {
+  const opt = OPTIONS.find(o => o.id === id);
+  if (!opt) return;
+
+  if (localOpts.includes(id)) {
+    // 이미 선택된 거면 해제
+    localOpts = localOpts.filter(o => o !== id);
+  } else {
+    // 같은 그룹의 다른 옵션 제거 후 추가 (중복 방지)
+    localOpts = localOpts.filter(o => OPTIONS.find(op=>op.id===o)?.group !== opt.group);
+    localOpts.push(id);
+  }
+
+  renderOptButtons(); // 즉시 UI 반영 (Firebase 응답 기다리지 않음)
+
+  // 확정 버튼 초기화
+  const btn = document.getElementById('confirmBtn');
+  btn.textContent = '✓ 주문 확정'; btn.className = 'confirm-btn';
+
+  await update(ref(db, `${ROOM}/members/${myId}`), { opts: localOpts, confirmed: false });
+};
+window.confirmMyOrder = async () => {
+  const drink = document.getElementById('myDrinkSelect').value;
+  const confirming = drink !== 'none';
+  await update(ref(db, `${ROOM}/members/${myId}`), { drink, opts: localOpts, confirmed: confirming });
+
+  if (!confirming) { toast('주문을 취소했어요'); return; }
+
+  // 확정과 동시에 오늘 기록에 내 주문 저장
+  const item = menu.find(mi => mi.id === drink);
+  if (!item) { toast('✓ 주문이 확정됐어요!'); return; }
+
+  const now = new Date();
+  const kst = new Date(now.getTime() + 9*60*60*1000);
+  const todayKey = 'd' + kst.toISOString().slice(0,10).replace(/-/g,'');
+  const dateLabel = now.toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric'});
+  const myEntry = {
+    name: myName,
+    drink: item.name,
+    opts: localOpts.map(o=>OPTIONS.find(op=>op.id===o)?.name).filter(Boolean),
+    price: calcPrice({ drink, opts: localOpts })
+  };
+
+  try {
+    const todaySnap = await get(ref(db, `${ROOM}/history/${todayKey}`));
+    if (todaySnap.exists()) {
+      const existing = todaySnap.val();
+      const items = existing.items || [];
+      // 같은 사람 주문이 이미 있으면 교체, 없으면 추가
+      const idx = items.findIndex(i => i.name === myName);
+      if (idx >= 0) items[idx] = myEntry; else items.push(myEntry);
+      await update(ref(db, `${ROOM}/history/${todayKey}`), {
+        items,
+        total: items.reduce((s,i)=>s+i.price,0),
+        updatedAt: Date.now()
+      });
+    } else {
+      await set(ref(db, `${ROOM}/history/${todayKey}`), {
+        dateLabel,
+        items: [myEntry],
+        total: myEntry.price,
+        createdAt: Date.now(),
+        updatedAt: Date.now()
+      });
+    }
+    toast('✓ 주문이 확정됐어요!');
+  } catch(e) {
+    console.error('confirmMyOrder save error:', e);
+    toast('✓ 주문이 확정됐어요!');
+  }
+};
+
+// ── 팀원 현황 ──
+let teamOpen = false;
+window.toggleTeamCard = function() {
+  teamOpen = !teamOpen;
+  document.getElementById('teamCard').classList.toggle('collapsed', !teamOpen);
+  document.getElementById('teamArrow').className = 'team-arrow ' + (teamOpen ? 'open' : 'closed');
+};
+
+function updateTeamBadge(confirmedCount, total) {
+  const badge = document.getElementById('teamConfirmedBadge');
+  if (!teamOpen && confirmedCount > 0) {
+    badge.textContent = confirmedCount + '/' + total + '명 확정';
+    badge.style.display = 'inline-block';
+  } else {
+    badge.style.display = 'none';
+  }
+}
+
+function renderTeam() {
+  const el = document.getElementById('teamCard');
+
+  // 등록된 팀원 기준으로 표시 (온라인 여부 포함)
+  const regList = Object.values(registeredMembers);
+  if (!regList.length) {
+    // 등록된 팀원이 없으면 접속 중인 팀원 표시
+    const list = Object.entries(members).sort((a,b)=>a[1].name.localeCompare(b[1].name,'ko'));
+    document.getElementById('memberCount').textContent = list.length ? list.length+'명' : '';
+    const confirmed = list.filter(([,m])=>m.confirmed&&menu.find(mi=>mi.id===m.drink)).length;
+    updateTeamBadge(confirmed, list.length);
+    if (!list.length) { el.innerHTML = '<div class="empty-msg">아직 참여한 팀원이 없어요</div>'; return; }
+    el.innerHTML = list.map(([uid,m]) => memberRow(uid, m)).join('');
+    return;
+  }
+
+  document.getElementById('memberCount').textContent = regList.length+'명';
+  const confirmed = regList.filter(reg => {
+    const entry = Object.entries(members).find(([,m])=>m.name===reg.name);
+    return entry && entry[1].confirmed && menu.find(mi=>mi.id===entry[1].drink);
+  }).length;
+  updateTeamBadge(confirmed, regList.length);
+
+  // 등록된 팀원 목록 + 현재 접속/주문 상태 (가나다순)
+  el.innerHTML = regList.sort((a,b)=>a.name.localeCompare(b.name,'ko')).map(reg => {
+    // 등록 이름으로 members에서 찾기
+    const entry = Object.entries(members).find(([,m]) => m.name === reg.name);
+    const uid = entry ? entry[0] : null;
+    const m = entry ? entry[1] : null;
+    const isMe = uid === myId;
+    const item = m ? menu.find(mi=>mi.id===m.drink) : null;
+    const optLabels = m ? (m.opts||[]).map(o=>OPTIONS.find(op=>op.id===o)?.name).filter(Boolean) : [];
+    const orderStr = item ? item.name+(optLabels.length?' · '+optLabels.join(', '):'') : null;
+
+    return `<div class="member-item">
+      <div class="avatar ${isMe?'me':''}">${reg.name[0]}</div>
+      <div class="member-info">
+        <div class="mname">${reg.name}${isMe?' <span style="font-size:11px;color:var(--green);font-weight:400">(나)</span>':''}</div>
+        <div class="morder">${m && m.confirmed && orderStr
+          ? `<span class="order-tag">${orderStr}</span>`
+          : m ? `<span class="waiting-tag">대기 중</span>`
+          : `<span class="waiting-tag" style="color:var(--text3)">미접속</span>`}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function memberRow(uid, m) {
+  const isMe = uid === myId;
+  const item = menu.find(mi=>mi.id===m.drink);
+  const optLabels = (m.opts||[]).map(o=>OPTIONS.find(op=>op.id===o)?.name).filter(Boolean);
+  const orderStr = item ? item.name+(optLabels.length?' · '+optLabels.join(', '):'') : null;
+  return `<div class="member-item">
+    <div class="avatar ${isMe?'me':''}">${m.name[0]}</div>
+    <div class="member-info">
+      <div class="mname">${m.name}${isMe?' <span style="font-size:11px;color:var(--green);font-weight:400">(나)</span>':''}</div>
+      <div class="morder">${m.confirmed&&orderStr?`<span class="order-tag">${orderStr}</span>`:`<span class="waiting-tag">대기 중</span>`}</div>
+    </div>
+  </div>`;
+}
+
+// ── 요약 ──
+function calcPrice(m) {
+  const item = menu.find(mi=>mi.id===m.drink); if (!item) return 0;
+  const isL = m.opts?.includes('size_l');
+  const base = isL ? (item.priceL||item.price||0) : (item.priceM||item.price||0);
+  return base + (m.opts?.includes('shot')?500:0) + (m.opts?.includes('syrup')?300:0);
+}
+function renderSummary() {
+  const ss = document.getElementById('summarySection');
+
+  const ordered = Object.values(members).filter(m=>m.confirmed&&menu.find(mi=>mi.id===m.drink));
+  if (!ordered.length) { ss.innerHTML=''; return; }
+  const total = ordered.reduce((s,m)=>s+calcPrice(m),0);
+  const counts = {};
+  ordered.forEach(m=>{const n=menu.find(mi=>mi.id===m.drink).name; counts[n]=(counts[n]||0)+1;});
+  ss.innerHTML = `<div class="summary-wrap">
+    <div class="section-label" style="padding-top:4px">주문 현황 · ${ordered.length}명 확정</div>
+    <div class="count-scroll">${Object.entries(counts).map(([n,c])=>`<div class="count-chip"><div class="n">${c}</div><div class="l">${n}</div></div>`).join('')}</div>
+    <div class="card" style="padding:0 14px">
+      <ul class="order-list">${ordered.map(m=>{
+        const item=menu.find(mi=>mi.id===m.drink);
+        const opts=(m.opts||[]).map(o=>OPTIONS.find(op=>op.id===o)?.name).filter(Boolean);
+        return `<li><span class="who">${m.name}</span><span class="what">${item.name}${opts.length?'<br><span style="font-size:12px;color:var(--text2)">'+opts.join(', ')+'</span>':''}</span><span class="amt">${calcPrice(m).toLocaleString()}원</span></li>`;
+      }).join('')}</ul>
+      <div class="total-row"><span>합계</span><span>${total.toLocaleString()}원</span></div>
+    </div>
+  </div>`;
+
+}
+window.saveOrder = async () => {
+  const ordered = Object.values(members).filter(m=>m.confirmed&&menu.find(mi=>mi.id===m.drink));
+  if (!ordered.length) return;
+  const now = new Date();
+  // 한국 시간 기준 날짜 키 (YYYYMMDD)
+  const kst = new Date(now.getTime() + 9*60*60*1000);
+  const todayKey = 'd' + kst.toISOString().slice(0,10).replace(/-/g,'');
+  const dateLabel = now.toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric'});
+
+  const newItems = ordered.map(m=>({
+    name: m.name,
+    drink: menu.find(mi=>mi.id===m.drink).name,
+    opts: (m.opts||[]).map(o=>OPTIONS.find(op=>op.id===o)?.name).filter(Boolean),
+    price: calcPrice(m)
+  }));
+
+  try {
+    const todaySnap = await get(ref(db, `${ROOM}/history/${todayKey}`));
+    if (todaySnap.exists()) {
+      const existing = todaySnap.val();
+      const items = [...(existing.items||[]), ...newItems];
+      await update(ref(db, `${ROOM}/history/${todayKey}`), {
+        items,
+        total: items.reduce((s,i)=>s+i.price,0),
+        updatedAt: Date.now()
+      });
+    } else {
+      await set(ref(db, `${ROOM}/history/${todayKey}`), {
+        dateLabel,
+        items: newItems,
+        total: newItems.reduce((s,i)=>s+i.price,0),
+        createdAt: Date.now(),
+        updatedAt: Date.now()
+      });
+    }
+    toast('✓ 주문이 저장됐어요!');
+  } catch(e) {
+    console.error('saveOrder error:', e);
+    toast('저장 중 오류가 발생했어요');
+  }
+};
+
+// ── 메뉴 관리 ──
+function renderMenuTab() {
+  document.getElementById('menuList').innerHTML = menu.map(mi=>`
+    <div class="menu-item">
+      <div class="menu-item-top">
+        <input type="text" value="${mi.name}" ${isAdmin?'':'readonly'} onchange="updateMenuName('${mi.id}',this.value)" style="${isAdmin?'':'border-color:transparent;background:transparent'}" />
+        ${isAdmin?`<button class="btn btn-sm btn-danger btn-icon" onclick="deleteMenuItem('${mi.id}')" ${menu.length<=1?'disabled':''}>✕</button>`:''}
+      </div>
+      <div class="menu-item-prices">
+        <div class="price-field">
+          <span class="price-label">M</span>
+          <input type="number" value="${mi.priceM||mi.price||0}" ${isAdmin?'':'readonly'} onchange="updateMenuPriceM('${mi.id}',this.value)" style="${isAdmin?'':'border-color:transparent;background:transparent'}" />
+          <span class="price-label" style="font-weight:400">원</span>
+        </div>
+        <div class="price-field">
+          <span class="price-label">L</span>
+          <input type="number" value="${mi.priceL||mi.price||0}" ${isAdmin?'':'readonly'} onchange="updateMenuPriceL('${mi.id}',this.value)" style="${isAdmin?'':'border-color:transparent;background:transparent'}" />
+          <span class="price-label" style="font-weight:400">원</span>
+        </div>
+      </div>
+    </div>`).join('');
+}
+window.updateMenuName = async (id,v) => { if(!v.trim()||!isAdmin) return; await update(ref(db,`${ROOM}/menu/${id}`),{name:v.trim()}); };
+window.updateMenuPriceM = async (id,v) => { const p=parseInt(v); if(isNaN(p)||p<0||!isAdmin) return; await update(ref(db,`${ROOM}/menu/${id}`),{priceM:p}); };
+window.updateMenuPriceL = async (id,v) => { const p=parseInt(v); if(isNaN(p)||p<0||!isAdmin) return; await update(ref(db,`${ROOM}/menu/${id}`),{priceL:p}); };
+window.deleteMenuItem = async (id) => { if(menu.length<=1||!isAdmin) return; await remove(ref(db,`${ROOM}/menu/${id}`)); toast('메뉴가 삭제됐어요'); };
+window.addMenuItem = async () => {
+  if (!isAdmin) return;
+  const name=document.getElementById('newMenuName').value.trim();
+  const priceM=parseInt(document.getElementById('newMenuPriceM').value);
+  const priceL=parseInt(document.getElementById('newMenuPriceL').value);
+  if(!name||isNaN(priceM)||priceM<0||isNaN(priceL)||priceL<0) return;
+  const id='c_'+(menuCtr++); ls.set('coffee_mctr',menuCtr);
+  await set(ref(db,`${ROOM}/menu/${id}`),{id,name,priceM,priceL});
+  document.getElementById('newMenuName').value='';
+  document.getElementById('newMenuPriceM').value='';
+  document.getElementById('newMenuPriceL').value='';
+  toast(`'${name}' 메뉴가 추가됐어요`);
+};
+
+// ── 관리자: 팀원 등록 ──
+function renderRegisteredList() {
+  const el = document.getElementById('registeredList');
+  const list = Object.entries(registeredMembers);
+  if (!list.length) { el.innerHTML='<div class="empty-msg">등록된 팀원이 없어요<br>팀원을 추가해주세요</div>'; return; }
+
+  el.innerHTML = list.map(([id, reg]) => {
+    const isOnline = Object.values(members).some(m=>m.name===reg.name);
+    return `<div class="registered-item">
+      <div class="reg-avatar">${reg.name[0]}</div>
+      <span class="reg-name">${reg.name}</span>
+      ${isOnline ? '<span class="online-badge">접속 중</span>' : ''}
+      <button class="btn btn-sm btn-danger btn-icon" onclick="removeRegisteredMember('${id}')">✕</button>
+    </div>`;
+  }).join('');
+}
+
+window.addRegisteredMember = async () => {
+  const name = document.getElementById('newMemberName').value.trim();
+  if (!name) return;
+  const exists = Object.values(registeredMembers).some(m=>m.name===name);
+  if (exists) { toast('이미 등록된 팀원이에요'); return; }
+  await push(ref(db,`${ROOM}/registeredMembers`), { name });
+  document.getElementById('newMemberName').value='';
+  toast(`'${name}' 팀원이 등록됐어요`);
+};
+
+window.removeRegisteredMember = async (id) => {
+  await remove(ref(db,`${ROOM}/registeredMembers/${id}`));
+  toast('팀원이 삭제됐어요');
+};
+
+window.resetAllOrders = async () => {
+  if (!confirm('모든 팀원의 주문과 기록을 초기화할까요?')) return;
+  const updates = {};
+  Object.keys(members).forEach(uid => {
+    updates[`${ROOM}/members/${uid}/drink`] = 'none';
+    updates[`${ROOM}/members/${uid}/opts`] = [];
+    updates[`${ROOM}/members/${uid}/confirmed`] = false;
+  });
+  await update(ref(db), updates);
+  await remove(ref(db, `${ROOM}/history`));
+  toast('전체 주문과 기록이 초기화됐어요');
+};
+
+window.changePassword = async () => {
+  const pw1 = document.getElementById('newPw1').value;
+  const pw2 = document.getElementById('newPw2').value;
+  if (!pw1) { toast('비밀번호를 입력해주세요'); return; }
+  if (pw1 !== pw2) { toast('비밀번호가 일치하지 않아요'); return; }
+  await set(ref(db,`${ROOM}/adminPw`), pw1);
+  document.getElementById('newPw1').value=''; document.getElementById('newPw2').value='';
+  toast('비밀번호가 변경됐어요');
+};
+
+// ── 기록 ──
+function renderHistory() {
+  const el = document.getElementById('historyList');
+  if (!history.length) { el.innerHTML='<div class="empty-msg">저장된 기록이 없어요</div>'; return; }
+
+  const sorted = [...history].sort((a,b) => b.fbKey.localeCompare(a.fbKey));
+
+  el.innerHTML = sorted.map(h => {
+    const items = h.items || [];
+    return `
+    <div class="hist-item">
+      <div class="hist-item-header">
+        <div class="hist-date">${h.dateLabel}</div>
+        <button class="btn btn-sm btn-danger" onclick="delHist('${h.fbKey}')">삭제</button>
+      </div>
+      <div class="hist-body">
+        ${items.map((i,idx)=>`
+          <div class="hist-row">
+            <span class="hist-num">${idx+1}</span>
+            <span class="hist-who">${i.name}</span>
+            <span class="hist-what">${i.drink}${i.opts?.length?' ('+i.opts.join(', ')+')':''}</span>
+            <span class="hist-amt">${i.price.toLocaleString()}원</span>
+          </div>`).join('')}
+      </div>
+      <div class="hist-day-total">
+        <span>합계</span>
+        <span>${(h.total||0).toLocaleString()}원 · ${items.length}잔</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+window.delHist = async (fbKey) => {
+  if (!confirm('이 날의 기록을 삭제할까요?')) return;
+  await remove(ref(db, `${ROOM}/history/${fbKey}`));
+};
+window.clearHistory = async () => {
+  if (!confirm('기록을 모두 삭제할까요?')) return;
+  await remove(ref(db, `${ROOM}/history`));
+};
+
+// ── 탭 ──
+window.switchTab = name => {
+  const tabs = ['order','menu','admin','history'];
+  tabs.forEach(n=>{
+    document.getElementById('panel-'+n)?.classList.toggle('active',n===name);
+    const btn = document.getElementById('nav-'+n);
+    if (btn) btn.classList.toggle('active',n===name);
+  });
+  document.querySelector('.content').scrollTop=0;
+  if(name==='history') renderHistory();
+  if(name==='admin') renderRegisteredList();
+};
+
+// ── 초기화 ──
+document.getElementById('nameInput').addEventListener('keydown',e=>{if(e.key==='Enter')window.enterApp();});
+document.getElementById('adminPwInput').addEventListener('keydown',e=>{if(e.key==='Enter')window.loginAdmin();});
+document.getElementById('newMemberName')?.addEventListener('keydown',e=>{if(e.key==='Enter')window.addRegisteredMember();});
+document.getElementById('newMenuPrice').addEventListener('keydown',e=>{if(e.key==='Enter')window.addMenuItem();});
+
+// 저장된 세션 복원
+const savedName = ls.get('coffee_name', null);
+const savedAdmin = ls.get('coffee_admin', false);
+if (savedName && savedAdmin) {
+  myName='관리자'; isAdmin=true; startApp();
+} else if (savedName) {
+  myName=savedName; startApp();
+} else {
+  setConn(false);
+}
+
+if('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(()=>{});
+</script>
+</body>
+</html>
