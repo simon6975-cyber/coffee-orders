@@ -99,40 +99,19 @@ select { width: 100%; height: 44px; padding: 0 12px; border: 0.5px solid var(--b
 .confirm-btn { width: 100%; height: 48px; background: #134E34; color: #fff; border: none; border-radius: var(--radius-lg); font-size: 16px; font-weight: 600; cursor: pointer; font-family: inherit; }
 .confirm-btn:active { opacity: 0.8; }
 .confirm-btn.confirmed { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
-
-.member-item { padding: 12px 14px; border-bottom: 0.5px solid var(--border); display: flex; align-items: center; gap: 12px; background: var(--bg); }
-.member-item:last-child { border-bottom: none; }
-.avatar { width: 38px; height: 38px; border-radius: 50%; background: var(--blue-bg); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 600; color: var(--blue); flex-shrink: 0; }
-.avatar.me { background: #E1F5EE; color: #0F6E56; }
-.member-info { flex: 1; min-width: 0; }
-.mname { font-size: 15px; font-weight: 500; }
-.morder { font-size: 12px; margin-top: 3px; }
-.order-tag { display: inline-block; color: var(--green); background: var(--green-bg); padding: 2px 9px; border-radius: 20px; }
-.waiting-tag { display: inline-block; color: var(--text3); background: var(--bg2); padding: 2px 9px; border-radius: 20px; }
-
-.summary-wrap { padding: 0 16px 4px; }
-.count-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 14px; -webkit-overflow-scrolling: touch; }
-.count-scroll::-webkit-scrollbar { display: none; }
-.count-chip { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 10px 14px; text-align: center; flex-shrink: 0; min-width: 82px; }
-.count-chip .n { font-size: 22px; font-weight: 700; }
-.count-chip .l { font-size: 11px; color: var(--text2); margin-top: 2px; }
-.order-list { list-style: none; }
-.order-list li { display: flex; align-items: flex-start; padding: 9px 0; border-bottom: 0.5px solid var(--border); font-size: 14px; gap: 8px; }
-.order-list li:last-child { border-bottom: none; }
-.order-list .who { color: var(--text2); min-width: 55px; font-size: 13px; padding-top: 1px; }
-.order-list .what { flex: 1; font-weight: 500; }
-.order-list .amt { color: var(--text2); font-size: 13px; white-space: nowrap; padding-top: 1px; }
-.total-row { display: flex; justify-content: space-between; padding-top: 12px; border-top: 0.5px solid var(--border2); font-size: 16px; font-weight: 700; margin-top: 4px; }
 .save-btn-wrap { padding: 8px 16px 4px; }
-.team-toggle { display: flex; align-items: center; justify-content: space-between; width: 100%; background: none; border: none; cursor: pointer; padding: 0 0 8px 0; font-family: inherit; }
-.team-toggle > span:first-child { font-size: 12px; color: var(--text2); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
-.toggle-row { display: flex; align-items: center; gap: 6px; }
-.team-arrow { font-size: 16px; color: var(--text3); transition: transform 0.2s; display: inline-block; }
-.team-arrow.open { transform: rotate(0deg); }
-.team-arrow.closed { transform: rotate(-90deg); }
-.team-card-body { overflow: hidden; transition: max-height 0.3s ease, opacity 0.2s; max-height: 2000px; opacity: 1; }
-.team-card-body.collapsed { max-height: 0; opacity: 0; margin-bottom: 0; }
-.confirmed-badge { font-size: 11px; background: var(--green-bg); color: var(--green); padding: 2px 8px; border-radius: 20px; font-weight: 600; }
+
+/* 내 확정 내역 */
+.my-confirmed-wrap { padding: 0 16px 4px; }
+.my-confirmed-card { background: var(--bg); border-radius: var(--radius-lg); border: 0.5px solid var(--border); overflow: hidden; }
+.my-confirmed-header { padding: 14px 14px 10px; }
+.my-confirmed-header .label { font-size: 12px; color: var(--text2); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+.my-confirmed-body { padding: 0 14px 14px; }
+.my-confirmed-drink { font-size: 17px; font-weight: 600; margin-bottom: 4px; }
+.my-confirmed-opts { font-size: 13px; color: var(--text2); margin-bottom: 10px; }
+.my-confirmed-price { display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 0.5px solid var(--border); }
+.my-confirmed-price .price-label2 { font-size: 13px; color: var(--text2); }
+.my-confirmed-price .price-value { font-size: 17px; font-weight: 700; }
 
 /* 메뉴 탭 */
 .menu-item { display: flex; flex-direction: column; padding: 12px 14px; gap: 8px; border-bottom: 0.5px solid var(--border); background: var(--bg); }
@@ -229,16 +208,8 @@ select { width: 100%; height: 44px; padding: 0 12px; border: 0.5px solid var(--b
         <div class="opts" id="myOpts"></div>
         <button class="confirm-btn" id="confirmBtn" onclick="confirmMyOrder()">✓ 주문 확정</button>
       </div>
-      <button class="team-toggle" id="teamToggle" onclick="toggleTeamCard()">
-        <span>팀원 현황 <span id="memberCount" style="color:var(--text3);font-weight:400"></span></span>
-        <span class="toggle-row">
-          <span id="teamConfirmedBadge" class="confirmed-badge" style="display:none"></span>
-          <span id="teamArrow" class="team-arrow closed">▾</span>
-        </span>
-      </button>
-      <div class="card team-card-body collapsed" id="teamCard"><div class="empty-msg">불러오는 중...</div></div>
     </div>
-    <div id="summarySection"></div>
+    <div id="myConfirmedSection"></div>
 
   </div>
 
@@ -505,8 +476,7 @@ function listenRoom() {
     registeredMembers = data.registeredMembers || {};
     setConn(true);
     if (!isAdmin) renderMyOrderUI();
-    renderTeam();
-    renderSummary();
+    renderMyConfirmed();
     renderMenuTab();
     if (isAdmin) renderRegisteredList();
   }, () => setConn(false));
@@ -644,114 +614,44 @@ window.confirmMyOrder = async () => {
   }
 };
 
-// ── 팀원 현황 ──
-let teamOpen = false;
-window.toggleTeamCard = function() {
-  teamOpen = !teamOpen;
-  document.getElementById('teamCard').classList.toggle('collapsed', !teamOpen);
-  document.getElementById('teamArrow').className = 'team-arrow ' + (teamOpen ? 'open' : 'closed');
-};
-
-function updateTeamBadge(confirmedCount, total) {
-  const badge = document.getElementById('teamConfirmedBadge');
-  if (!teamOpen && confirmedCount > 0) {
-    badge.textContent = confirmedCount + '/' + total + '명 확정';
-    badge.style.display = 'inline-block';
-  } else {
-    badge.style.display = 'none';
-  }
-}
-
-function renderTeam() {
-  const el = document.getElementById('teamCard');
-
-  // 등록된 팀원 기준으로 표시 (온라인 여부 포함)
-  const regList = Object.values(registeredMembers);
-  if (!regList.length) {
-    // 등록된 팀원이 없으면 접속 중인 팀원 표시
-    const list = Object.entries(members).sort((a,b)=>a[1].name.localeCompare(b[1].name,'ko'));
-    document.getElementById('memberCount').textContent = list.length ? list.length+'명' : '';
-    const confirmed = list.filter(([,m])=>m.confirmed&&menu.find(mi=>mi.id===m.drink)).length;
-    updateTeamBadge(confirmed, list.length);
-    if (!list.length) { el.innerHTML = '<div class="empty-msg">아직 참여한 팀원이 없어요</div>'; return; }
-    el.innerHTML = list.map(([uid,m]) => memberRow(uid, m)).join('');
-    return;
-  }
-
-  document.getElementById('memberCount').textContent = regList.length+'명';
-  const confirmed = regList.filter(reg => {
-    const entry = Object.entries(members).find(([,m])=>m.name===reg.name);
-    return entry && entry[1].confirmed && menu.find(mi=>mi.id===entry[1].drink);
-  }).length;
-  updateTeamBadge(confirmed, regList.length);
-
-  // 등록된 팀원 목록 + 현재 접속/주문 상태 (가나다순)
-  el.innerHTML = regList.sort((a,b)=>a.name.localeCompare(b.name,'ko')).map(reg => {
-    // 등록 이름으로 members에서 찾기
-    const entry = Object.entries(members).find(([,m]) => m.name === reg.name);
-    const uid = entry ? entry[0] : null;
-    const m = entry ? entry[1] : null;
-    const isMe = uid === myId;
-    const item = m ? menu.find(mi=>mi.id===m.drink) : null;
-    const optLabels = m ? (m.opts||[]).map(o=>OPTIONS.find(op=>op.id===o)?.name).filter(Boolean) : [];
-    const orderStr = item ? item.name+(optLabels.length?' · '+optLabels.join(', '):'') : null;
-
-    return `<div class="member-item">
-      <div class="avatar ${isMe?'me':''}">${reg.name[0]}</div>
-      <div class="member-info">
-        <div class="mname">${reg.name}${isMe?' <span style="font-size:11px;color:var(--green);font-weight:400">(나)</span>':''}</div>
-        <div class="morder">${m && m.confirmed && orderStr
-          ? `<span class="order-tag">${orderStr}</span>`
-          : m ? `<span class="waiting-tag">대기 중</span>`
-          : `<span class="waiting-tag" style="color:var(--text3)">미접속</span>`}</div>
-      </div>
-    </div>`;
-  }).join('');
-}
-
-function memberRow(uid, m) {
-  const isMe = uid === myId;
-  const item = menu.find(mi=>mi.id===m.drink);
-  const optLabels = (m.opts||[]).map(o=>OPTIONS.find(op=>op.id===o)?.name).filter(Boolean);
-  const orderStr = item ? item.name+(optLabels.length?' · '+optLabels.join(', '):'') : null;
-  return `<div class="member-item">
-    <div class="avatar ${isMe?'me':''}">${m.name[0]}</div>
-    <div class="member-info">
-      <div class="mname">${m.name}${isMe?' <span style="font-size:11px;color:var(--green);font-weight:400">(나)</span>':''}</div>
-      <div class="morder">${m.confirmed&&orderStr?`<span class="order-tag">${orderStr}</span>`:`<span class="waiting-tag">대기 중</span>`}</div>
-    </div>
-  </div>`;
-}
-
-// ── 요약 ──
+// ── 내 확정 내역 ──
 function calcPrice(m) {
   const item = menu.find(mi=>mi.id===m.drink); if (!item) return 0;
   const isL = m.opts?.includes('size_l');
   const base = isL ? (item.priceL||item.price||0) : (item.priceM||item.price||0);
   return base + (m.opts?.includes('shot')?500:0) + (m.opts?.includes('syrup')?300:0);
 }
-function renderSummary() {
-  const ss = document.getElementById('summarySection');
 
-  const ordered = Object.values(members).filter(m=>m.confirmed&&menu.find(mi=>mi.id===m.drink));
-  if (!ordered.length) { ss.innerHTML=''; return; }
-  const total = ordered.reduce((s,m)=>s+calcPrice(m),0);
-  const counts = {};
-  ordered.forEach(m=>{const n=menu.find(mi=>mi.id===m.drink).name; counts[n]=(counts[n]||0)+1;});
-  ss.innerHTML = `<div class="summary-wrap">
-    <div class="section-label" style="padding-top:4px">주문 현황 · ${ordered.length}명 확정</div>
-    <div class="count-scroll">${Object.entries(counts).map(([n,c])=>`<div class="count-chip"><div class="n">${c}</div><div class="l">${n}</div></div>`).join('')}</div>
-    <div class="card" style="padding:0 14px">
-      <ul class="order-list">${ordered.map(m=>{
-        const item=menu.find(mi=>mi.id===m.drink);
-        const opts=(m.opts||[]).map(o=>OPTIONS.find(op=>op.id===o)?.name).filter(Boolean);
-        return `<li><span class="who">${m.name}</span><span class="what">${item.name}${opts.length?'<br><span style="font-size:12px;color:var(--text2)">'+opts.join(', ')+'</span>':''}</span><span class="amt">${calcPrice(m).toLocaleString()}원</span></li>`;
-      }).join('')}</ul>
-      <div class="total-row"><span>합계</span><span>${total.toLocaleString()}원</span></div>
+function renderMyConfirmed() {
+  const el = document.getElementById('myConfirmedSection');
+  const myData = members[myId];
+
+  if (!myData || !myData.confirmed || myData.drink === 'none') {
+    el.innerHTML = '';
+    return;
+  }
+
+  const item = menu.find(mi => mi.id === myData.drink);
+  if (!item) { el.innerHTML = ''; return; }
+
+  const optLabels = (myData.opts || []).map(o => OPTIONS.find(op => op.id === o)?.name).filter(Boolean);
+  const price = calcPrice(myData);
+
+  el.innerHTML = `<div class="my-confirmed-wrap">
+    <div class="my-confirmed-card">
+      <div class="my-confirmed-header"><div class="label">내 주문 확정 내역</div></div>
+      <div class="my-confirmed-body">
+        <div class="my-confirmed-drink">${item.name}</div>
+        ${optLabels.length ? `<div class="my-confirmed-opts">${optLabels.join(', ')}</div>` : ''}
+        <div class="my-confirmed-price">
+          <span class="price-label2">금액</span>
+          <span class="price-value">${price.toLocaleString()}원</span>
+        </div>
+      </div>
     </div>
   </div>`;
-
 }
+
 window.saveOrder = async () => {
   const ordered = Object.values(members).filter(m=>m.confirmed&&menu.find(mi=>mi.id===m.drink));
   if (!ordered.length) return;
