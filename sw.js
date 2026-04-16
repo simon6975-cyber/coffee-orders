@@ -1,4 +1,4 @@
-const CACHE = 'coffee-order-v2-1';
+const CACHE = 'coffee-order-v2-1-b';
 const ASSETS = ['./index.html', './manifest.json'];
 
 self.addEventListener('install', e => {

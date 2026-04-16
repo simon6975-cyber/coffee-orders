@@ -420,6 +420,9 @@ window.loginAdmin = async function() {
   const correctPw = snap.exists() ? snap.val() : DEFAULT_ADMIN_PW;
   if (pw !== correctPw) { errEl.textContent = '비밀번호가 틀렸어요'; return; }
   errEl.textContent = '';
+  // 관리자 로그인 전 원래 이름이 있었다면 따로 보존
+  const prevName = ls.get('coffee_name', null);
+  if (prevName && prevName !== '관리자') ls.set('coffee_name_last', prevName);
   myName = '관리자'; isAdmin = true;
   ls.set('coffee_name', '관리자'); ls.set('coffee_admin', true);
   startApp();
@@ -428,10 +431,13 @@ window.loginAdmin = async function() {
 window.logout = function() {
   if (roomListener) { roomListener(); roomListener = null; }
   if (!isAdmin && myName) remove(ref(db, `${ROOM}/members/${myId}`));
+  const lastName = isAdmin ? ls.get('coffee_name_last', null) : myName;
   myName = null; isAdmin = false;
-  ls.set('coffee_name', null); ls.set('coffee_admin', false);
+  // 관리자 플래그는 해제, 이름은 다음 로그인 편의를 위해 유지
+  ls.set('coffee_admin', false);
+  if (lastName && lastName !== '관리자') ls.set('coffee_name', lastName);
   document.getElementById('overlayName').style.display = 'flex';
-  document.getElementById('nameInput').value = '';
+  document.getElementById('nameInput').value = (lastName && lastName !== '관리자') ? lastName : '';
   document.getElementById('nameError').textContent = '';
   setConn(false);
 };
@@ -879,11 +885,14 @@ const savedName = ls.get('coffee_name', null);
 const savedAdmin = ls.get('coffee_admin', false);
 if (savedName && savedAdmin) {
   myName='관리자'; isAdmin=true; startApp();
-} else if (savedName) {
+} else if (savedName && savedName !== '관리자') {
   // 저장된 이름을 입력창에 자동으로 채워넣기 (재입력 불필요)
   document.getElementById('nameInput').value = savedName;
   setConn(false);
 } else {
+  // 관리자 로그아웃 후라면 이전 이름을 복원
+  const lastName = ls.get('coffee_name_last', null);
+  if (lastName) document.getElementById('nameInput').value = lastName;
   setConn(false);
 }
 
