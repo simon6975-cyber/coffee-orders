@@ -169,7 +169,7 @@ select { width: 100%; height: 44px; padding: 0 12px; border: 0.5px solid var(--b
   <button class="overlay-btn" onclick="enterApp()">시작하기</button>
   <button class="overlay-btn secondary" onclick="showAdminLogin()">🔑 관리자 로그인</button>
   <div class="error-msg" id="nameError"></div>
-  <div class="overlay-version">v2.1</div>
+  <div class="overlay-version">v2.3</div>
 </div>
 
 <!-- 관리자 비밀번호 오버레이 -->
@@ -400,6 +400,7 @@ window.enterApp = async function() {
   // 등록된 팀원이 아무도 없으면 (첫 세팅) 통과
   errEl.textContent = '';
   myName = name; ls.set('coffee_name', name);
+  ls.set('coffee_name_saved', name);  // 앱 재시작 시 복원용 (절대 삭제 안 됨)
   isAdmin = false;
   startApp();
 };
@@ -878,25 +879,33 @@ window.switchTab = name => {
 document.getElementById('nameInput').addEventListener('keydown',e=>{if(e.key==='Enter')window.enterApp();});
 document.getElementById('adminPwInput').addEventListener('keydown',e=>{if(e.key==='Enter')window.loginAdmin();});
 document.getElementById('newMemberName')?.addEventListener('keydown',e=>{if(e.key==='Enter')window.addRegisteredMember();});
-document.getElementById('newMenuPrice').addEventListener('keydown',e=>{if(e.key==='Enter')window.addMenuItem();});
+document.getElementById('newMenuPriceM')?.addEventListener('keydown',e=>{if(e.key==='Enter')window.addMenuItem();});
+document.getElementById('newMenuPriceL')?.addEventListener('keydown',e=>{if(e.key==='Enter')window.addMenuItem();});
 
 // 저장된 세션 복원
 const savedName = ls.get('coffee_name', null);
 const savedAdmin = ls.get('coffee_admin', false);
 if (savedName && savedAdmin) {
   myName='관리자'; isAdmin=true; startApp();
-} else if (savedName && savedName !== '관리자') {
-  // 저장된 이름을 입력창에 자동으로 채워넣기 (재입력 불필요)
-  document.getElementById('nameInput').value = savedName;
-  setConn(false);
 } else {
-  // 관리자 로그아웃 후라면 이전 이름을 복원
-  const lastName = ls.get('coffee_name_last', null);
-  if (lastName) document.getElementById('nameInput').value = lastName;
+  // 이름 복원 우선순위: coffee_name_saved(영구) > coffee_name > coffee_name_last
+  const restoredName = ls.get('coffee_name_saved', null)
+    || (savedName && savedName !== '관리자' ? savedName : null)
+    || ls.get('coffee_name_last', null);
+  if (restoredName) document.getElementById('nameInput').value = restoredName;
   setConn(false);
 }
 
-if('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(()=>{});
+// 서비스워커 등록 (네트워크 우선 + 자동 갱신)
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js', { updateViaCache: 'none' })
+    .then(reg => reg.update())
+    .catch(() => {});
+  let refreshing = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (!refreshing) { refreshing = true; location.reload(); }
+  });
+}
 </script>
 </body>
 </html>
