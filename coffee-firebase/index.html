@@ -169,7 +169,7 @@ select { width: 100%; height: 44px; padding: 0 12px; border: 0.5px solid var(--b
   <button class="overlay-btn" onclick="enterApp()">시작하기</button>
   <button class="overlay-btn secondary" onclick="showAdminLogin()">🔑 관리자 로그인</button>
   <div class="error-msg" id="nameError"></div>
-  <div class="overlay-version">v2.1</div>
+  <div class="overlay-version">v2.3</div>
 </div>
 
 <!-- 관리자 비밀번호 오버레이 -->
@@ -879,7 +879,8 @@ window.switchTab = name => {
 document.getElementById('nameInput').addEventListener('keydown',e=>{if(e.key==='Enter')window.enterApp();});
 document.getElementById('adminPwInput').addEventListener('keydown',e=>{if(e.key==='Enter')window.loginAdmin();});
 document.getElementById('newMemberName')?.addEventListener('keydown',e=>{if(e.key==='Enter')window.addRegisteredMember();});
-document.getElementById('newMenuPrice').addEventListener('keydown',e=>{if(e.key==='Enter')window.addMenuItem();});
+document.getElementById('newMenuPriceM')?.addEventListener('keydown',e=>{if(e.key==='Enter')window.addMenuItem();});
+document.getElementById('newMenuPriceL')?.addEventListener('keydown',e=>{if(e.key==='Enter')window.addMenuItem();});
 
 // 저장된 세션 복원
 const savedName = ls.get('coffee_name', null);
